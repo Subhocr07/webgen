@@ -12,6 +12,9 @@ app
     .route("/register")
     .get(authenticationController.getRegister)
     .post(authenticationController.postRegister);
+// app.route("/register").post((req,res) => {
+//     res.send(req.body)
+// })
 
 app
     .route("/login")

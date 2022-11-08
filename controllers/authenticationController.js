@@ -4,13 +4,13 @@ const User = require("../models/userModel.js");
 // GET
 // landing page for bookLibrary
 exports.getWelcome = function (req, res) {
-    res.render("welcome");
+    res.send("welcome");
 }
 
 // GET
 // login page
 exports.getLogin = function (req, res) {
-    res.render("login", { dangerMessage: "true" });
+    res.send("login", { dangerMessage: "true" });
 }
 
 // POST
@@ -29,10 +29,10 @@ exports.postLogin = function (req, res) {
                     await foundUser.save();
                     res.redirect("/library/" + foundUser._id);
                 } else {
-                    res.render("login", { dangerMessage: `Wrong password. Please try again.` });
+                    res.send("login", { dangerMessage: `Wrong password. Please try again.` });
                 }
             } else {
-                res.render("login", { dangerMessage: `User not found. Enter a valid username.` });
+                res.send("login", { dangerMessage: `User not found. Enter a valid username.` });
             }
         }
     });
@@ -41,7 +41,7 @@ exports.postLogin = function (req, res) {
 // GET
 // registration page
 exports.getRegister = function (req, res) {
-    res.render("register", { dangerMessage: "true" });
+    res.send("register", { dangerMessage: "true" });
 }
 
 // POST
@@ -52,7 +52,7 @@ exports.postRegister = function (req, res) {
             res.send(err);
         } else {
             if (foundUser == null) {
-                const newUser = new User({
+                const newUser = await new User({
                     username: req.body.username,
                     password: md5(req.body.password),
                     signedIn: false
@@ -60,7 +60,7 @@ exports.postRegister = function (req, res) {
                 newUser.save();
                 res.redirect("/");
             } else {
-                res.render("register", { dangerMessage: "Username already exists. Please use another username." });
+                res.send("register", { dangerMessage: "Username already exists. Please use another username." });
             }
         }
     });
