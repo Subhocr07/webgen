@@ -17,7 +17,6 @@ app
 
 app
     .route("/login")
-
     .post(authenticationController.postLogin);
 
 app

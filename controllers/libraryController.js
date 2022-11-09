@@ -71,12 +71,12 @@ exports.postIssueBook = function (req, res) {
                         libraryBook.available = libraryBook.available - 1;
                         libraryBook.issued = libraryBook.issued + 1;
                         await libraryBook.save();
-                        res.redirect("/library/" + req.params.userID);
+                        res.send(`Book issued`);
                     }
                 });
             } else {
                 // user already issued the book
-                res.redirect("/library/" + req.params.userID);
+                res.send(`Already issued book to you `)
             }
         }
     });
@@ -107,7 +107,7 @@ exports.postReturnBook = function (req, res) {
                 }
             });
             // redirecting to user's library
-            res.redirect("/library/" + req.params.userID);
+            res.send(`Book returned successfully`);
         }
     });
 }
@@ -117,12 +117,12 @@ exports.postReturnBook = function (req, res) {
 exports.getNewBook = async function (req, res) {
     User.findOne({ _id: req.params.userID }, function (err, foundUser) {
         if (err) {
-            res.send(`Please login or register <a href="/">here</a> before accessing the library!`);
+            res.send(`Please login or register  before accessing the library!`);
         } else {
             if (foundUser.signedIn == false) {
-                res.render("login", { dangerMessage: "Please Sign In before adding a book to the library." })
+                res.send("Please Sign In before adding a book to the library.")
             } else {
-                res.render("newBook", { user: foundUser });
+                res.send({ user: foundUser });
             }
         }
     });
