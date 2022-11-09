@@ -10,7 +10,6 @@ app
 
 app
     .route("/register")
-    .get(authenticationController.getRegister)
     .post(authenticationController.postRegister);
 // app.route("/register").post((req,res) => {
 //     res.send(req.body)
@@ -18,7 +17,7 @@ app
 
 app
     .route("/login")
-    .get(authenticationController.getLogin)
+
     .post(authenticationController.postLogin);
 
 app

@@ -9,13 +9,13 @@ exports.getLibrary = function (req, res) {
             res.send(err);
         } else {
             if (foundUser.signedIn == false) {
-                res.render("login", { dangerMessage: "Please Sign In before accessing the library." })
+                res.send("Please Sign In before accessing the library.")
             } else {
                 Library.find({}, function (err, foundBooks) {
                     if (err) {
                         res.send(err);
                     } else {
-                        res.render("library", {
+                        res.send({
                             user: foundUser,
                             books: foundBooks.reverse()
                         });
@@ -35,7 +35,8 @@ exports.postSignout = function (req, res) {
         } else {
             foundUser.signedIn = false;
             await foundUser.save();
-            res.redirect("/");
+            res.send(`User logged out successfully`)
+            // res.redirect("/");
         }
     });
 }
@@ -158,7 +159,7 @@ exports.postNewBook = function (req, res) {
                     });
                     await newBook.save();
                 }
-                res.redirect("/library/" + req.params.userID);
+                res.send("book saved");
             }
         }
     });

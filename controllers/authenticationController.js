@@ -7,12 +7,6 @@ exports.getWelcome = function (req, res) {
     res.send("welcome");
 }
 
-// GET
-// login page
-exports.getLogin = function (req, res) {
-    res.send("login", { dangerMessage: "true" });
-}
-
 // POST
 // login authentication
 exports.postLogin = function (req, res) {
@@ -26,24 +20,18 @@ exports.postLogin = function (req, res) {
             if (foundUser) {
                 if (foundUser.password === password) {
                     foundUser.signedIn = true;
-                    await foundUser.save();
-                    res.redirect("/library/" + foundUser._id);
+                   const loggedInUser= await foundUser.save();
+                   res.send(`${loggedInUser.username} logged in successfully` )
+                    
                 } else {
-                    res.send("login", { dangerMessage: `Wrong password. Please try again.` });
+                    res.send(`Wrong password. Please try again.`);
                 }
             } else {
-                res.send("login", { dangerMessage: `User not found. Enter a valid username.` });
+                res.send(`${req.body.username}  not found. Enter a valid username.`);
             }
         }
     });
 }
-
-// GET
-// registration page
-exports.getRegister = function (req, res) {
-    res.send("register", { dangerMessage: "true" });
-}
-
 // POST
 // registration page
 exports.postRegister = function (req, res) {
@@ -57,10 +45,11 @@ exports.postRegister = function (req, res) {
                     password: md5(req.body.password),
                     signedIn: false
                 });
-                newUser.save();
-                res.redirect("/");
+              const savedUser=  await newUser.save();
+                res.send(`New registered user details ${savedUser}`)
+                // res.redirect("/");
             } else {
-                res.send("register", { dangerMessage: "Username already exists. Please use another username." });
+                res.send( `${req.body.username} already exists. Please use another username`);
             }
         }
     });
