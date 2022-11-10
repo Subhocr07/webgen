@@ -1,0 +1,17 @@
+new user register---POST-http://localhost:3000/register
+user login ---POST--http://localhost:3000/login
+user loggedOut--post--http://localhost:3000/library/:userID/signout
+add new book --post--http://localhost:3000/library/636b8e2d3847f46db5a94f45/newBook
+to access the library--GET--http://localhost:3000/library/636b8e2d3847f46db5a94f45
+issue a book --POST--http://localhost:3000/library/636b8e2d3847f46db5a94f45/issueBook
+view user issued book--GET--http://localhost:3000/library/636b8e2d3847f46db5a94f45/newBook
+return the book --http://localhost:3000/library/636b8e2d3847f46db5a94f45/returnBook
+
+testcases:
+1.Login before run any operation
+2.same username or email is not allowed
+3.adding books 
+4.issued a book but same book will not be issued ,return first
+5.return book
+6.Signout
+7.if book available=0...it will show out of stock
